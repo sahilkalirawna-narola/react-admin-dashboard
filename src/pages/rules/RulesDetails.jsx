@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
 	Box,
 	Button,
+	Chip,
 	CircularProgress,
 	Typography,
 	useTheme,
@@ -58,42 +59,42 @@ const RulesDetails = () => {
 			field: "id",
 			headerName: "ID",
 			minWidth: 220,
-      flex: 1,
+			flex: 1,
 		},
 		{
 			field: "amount",
 			headerName: "Amount",
 			minWidth: 120,
 			flex: 1,
-      align: "right",
+			align: "right",
 			headerAlign: "right",
 		},
-    {
-      field: "type",
-      headerName: "Type",
-      minWidth: 120,
-      flex: 1,
-      renderCell: ({ row: { type } }) => (
-        <div className="capitalize">{type}</div>
-      ),
-    },
+		{
+			field: "type",
+			headerName: "Type",
+			minWidth: 120,
+			flex: 1,
+			renderCell: ({ row: { type } }) => (
+				<div className='capitalize'>{type}</div>
+			),
+		},
 		{
 			field: "sender_entity",
 			headerName: "Sender",
 			minWidth: 120,
 			flex: 1,
-      renderCell: ({ row: { sender_entity } }) => (
-        <div>{sender_entity?.name}</div>
-      ),
+			renderCell: ({ row: { sender_entity } }) => (
+				<div>{sender_entity?.name}</div>
+			),
 		},
 		{
 			field: "receiver_entity",
 			headerName: "Receiver",
 			minWidth: 120,
 			flex: 1,
-      renderCell: ({ row: { receiver_entity } }) => (
-        <div>{receiver_entity?.name}</div>
-      ),
+			renderCell: ({ row: { receiver_entity } }) => (
+				<div>{receiver_entity?.name}</div>
+			),
 		},
 		{
 			field: "created",
@@ -106,6 +107,12 @@ const RulesDetails = () => {
 		},
 	];
 
+	const getStatusBadgeColor = (status) => {
+		if (status === "draft") return "secondary";
+		if (status === "deactivated") return "warning";
+		return "success";
+	};
+
 	return (
 		<Box m='20px'>
 			{isLoading ? (
@@ -115,15 +122,14 @@ const RulesDetails = () => {
 			) : (
 				<>
 					<div className='flex justify-between'>
-						<div className='mb-3'>
+						<div className='flex items-center gap-3 mb-3'>
 							<Header title={ruleDetails?.title} />
-							<Typography
-								variant='h4'
-								gutterBottom
-								color={colors.greenAccent[400]}
-								className='capitalize'>
-								{ruleDetails?.status}
-							</Typography>
+							<Chip
+              size="medium"
+								label={`${ruleDetails?.status}`}
+								color={`${getStatusBadgeColor(ruleDetails?.status)}`}
+								className='text-2xl font-bold capitalize'
+							/>
 						</div>
 						<div>
 							<Button
@@ -194,9 +200,8 @@ const RulesDetails = () => {
 						{ruleDetails?.description}
 					</Typography>
 
-
 					<Typography
-						variant='h2'
+						variant='h3'
 						gutterBottom
 						color={colors.grey[100]}
 						className='!mt-8 capitalize'>

@@ -23,7 +23,7 @@ const Rules = () => {
 	const colors = tokens(theme.palette.mode);
 
 	const getStatusBadgeColor = (status) => {
-		if (status === "draft") return "default";
+		if (status === "draft") return "secondary";
 		if (status === "deactivated") return "warning";
 		return "success";
 	};
@@ -35,7 +35,7 @@ const Rules = () => {
 			minWidth: 120,
 			renderCell: ({ row }) => (
 				<>
-					<Link to={`/rules/${row.id}`}>{row?.id}</Link>
+					<Link to={`/rules/${row.id}`} className="underline">{row?.id}</Link>
 				</>
 			),
 		},
